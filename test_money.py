@@ -1,5 +1,4 @@
-from ast import Assert
-from money import Dollor
+from money import Dollor, Franc
 
 
 def test_multiplication():
@@ -10,3 +9,9 @@ def test_multiplication():
 
 def test_equality():
     assert Dollor(5) == Dollor(5)
+
+
+def test_franc_multiplication():
+    five: Franc = Franc(5)
+    assert five.times(2) == Franc(10)
+    assert five.times(3) == Franc(15)
