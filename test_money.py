@@ -4,10 +4,8 @@ from money import Dollor
 
 def test_multiplication():
     five: Dollor = Dollor(5)
-    product: Dollor = five.times(2)
-    assert product.amount == 10
-    product: Dollor = five.times(3)
-    assert product.amount == 15
+    assert five.times(2) == Dollor(10)
+    assert five.times(3) == Dollor(15)
 
 
 def test_equality():
