@@ -10,8 +10,9 @@ def test_multiplication():
 def test_equality():
     assert Dollor(5) == Dollor(5)
     assert Dollor(5) != Dollor(6)
-    assert Dollor(6) == Dollor(6)
-    assert Dollor(6) != Dollor(7)
+    assert Franc(6) == Franc(6)
+    assert Franc(6) != Franc(7)
+    assert Franc(6) != Dollor(6)
 
 
 def test_franc_multiplication():
