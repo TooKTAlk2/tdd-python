@@ -8,6 +8,14 @@ class Money:
             and self.__class__.__name__ == __o.__class__.__name__
         )
 
+    @staticmethod
+    def dollor(amount):
+        return Dollor(amount)
+
+    @staticmethod
+    def franc(amount):
+        return Franc(amount)
+
 
 class Dollor(Money):
     def times(self, multiplier):
@@ -20,7 +28,7 @@ class Franc(Money):
 
 
 if __name__ == "__main__":
-    five_dollor = Dollor(5)
-    five_franc = Franc(5)
+    five_dollor = Money.dollor(5)
+    five_franc = Money.franc(5)
 
     print(five_dollor.__class__.__name__)
