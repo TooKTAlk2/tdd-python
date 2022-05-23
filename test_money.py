@@ -19,3 +19,10 @@ def test_franc_multiplication():
     five: Money = Money.franc(5)
     assert five.times(2) == Money.franc(10)
     assert five.times(3) == Money.franc(15)
+
+
+def test_currency():
+    "USD" == Money.dollor(10).currency()
+    "CHF" == Money.franc(10).currency()
+
+    pass

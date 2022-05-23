@@ -1,6 +1,10 @@
+from locale import currency
+
+
 class Money:
-    def __init__(self, amount) -> None:
+    def __init__(self, amount, currency) -> None:
         self._amount = amount
+        self._currency: str = currency
 
     def __eq__(self, __o: object) -> bool:
         return (
@@ -10,21 +14,30 @@ class Money:
 
     @staticmethod
     def dollor(amount):
-        return Dollor(amount)
+        return Dollor(amount, "USD")
 
     @staticmethod
     def franc(amount):
-        return Franc(amount)
+        return Franc(amount, "CHF")
+
+    def currency(self):
+        return self._currency
 
 
 class Dollor(Money):
+    def __init__(self, amount, currency) -> None:
+        super().__init__(amount, currency)
+
     def times(self, multiplier):
-        return Dollor(self._amount * multiplier)
+        return Money.dollor(self._amount * multiplier, "USD")
 
 
 class Franc(Money):
+    def __init__(self, amount, currency) -> None:
+        super().__init__(amount, currency)
+
     def times(self, multiplier):
-        return Franc(self._amount * multiplier)
+        return Money.franc(self._amount * multiplier, "CHF")
 
 
 if __name__ == "__main__":
