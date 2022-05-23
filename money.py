@@ -11,11 +11,11 @@ class Money:
 
     @staticmethod
     def dollor(amount):
-        return Dollor(amount, "USD")
+        return Money(amount, "USD")
 
     @staticmethod
     def franc(amount):
-        return Franc(amount, "CHF")
+        return Money(amount, "CHF")
 
     @property
     def currency(self):
@@ -28,18 +28,8 @@ class Money:
         return Money(self._amount * multiplier, self.currency)
 
 
-class Dollor(Money):
-    def __init__(self, amount, currency) -> None:
-        super().__init__(amount, currency)
-
-
-class Franc(Money):
-    def __init__(self, amount, currency) -> None:
-        super().__init__(amount, currency)
-
-
 if __name__ == "__main__":
-    five_dollor = Money.dollor(5)
-    five_franc = Money.franc(5)
+    five_dollor = Money(5, "USD")
+    five_franc = Money(5, "CHF")
 
     print(five_dollor.__class__.__name__)
