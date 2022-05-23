@@ -7,10 +7,7 @@ class Money:
         self._currency: str = currency
 
     def __eq__(self, __o: object) -> bool:
-        return (
-            self._amount == __o._amount
-            and self.__class__.__name__ == __o.__class__.__name__
-        )
+        return self._amount == __o._amount and self.currency == __o.currency
 
     @staticmethod
     def dollor(amount):
@@ -20,24 +17,25 @@ class Money:
     def franc(amount):
         return Franc(amount, "CHF")
 
+    @property
     def currency(self):
         return self._currency
+
+    def __str__(self) -> str:
+        return f"{self.amount} {self.currency}"
+
+    def times(self, multiplier):
+        return Money(self._amount * multiplier, self.currency)
 
 
 class Dollor(Money):
     def __init__(self, amount, currency) -> None:
         super().__init__(amount, currency)
 
-    def times(self, multiplier):
-        return Money.dollor(self._amount * multiplier)
-
 
 class Franc(Money):
     def __init__(self, amount, currency) -> None:
         super().__init__(amount, currency)
-
-    def times(self, multiplier):
-        return Money.franc(self._amount * multiplier)
 
 
 if __name__ == "__main__":
