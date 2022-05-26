@@ -5,7 +5,7 @@ class Expression(ABC):
     pass
 
 
-class Money:
+class Money(Expression):
     def __init__(self, amount, currency) -> None:
         self._amount = amount
         self._currency: str = currency
