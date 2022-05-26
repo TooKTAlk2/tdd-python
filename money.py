@@ -1,3 +1,10 @@
+from abc import ABC
+
+
+class Expression(ABC):
+    pass
+
+
 class Money:
     def __init__(self, amount, currency) -> None:
         self._amount = amount
@@ -24,8 +31,13 @@ class Money:
     def times(self, multiplier):
         return Money(self._amount * multiplier, self.currency)
 
-    def __add__(self, __o: object):
+    def __add__(self, __o: object) -> Expression:
         return Money(self._amount + __o._amount, self.currency)
+
+
+class Bank:
+    def reduce(self, source: Money, to: str):
+        return Money.dollor(10)
 
 
 if __name__ == "__main__":
