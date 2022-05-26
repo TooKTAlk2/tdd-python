@@ -22,3 +22,9 @@ def test_franc_multiplication():
 def test_currency():
     assert "USD" == Money.dollor(10).currency
     assert "CHF" == Money.franc(10).currency
+
+
+def test_simple_addition():
+    sum = Money.dollor(5) + Money.dollor(5)
+
+    assert Money.dollor(10) == sum
