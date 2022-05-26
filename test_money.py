@@ -1,4 +1,4 @@
-from money import Money, Bank, Expression
+from money import Money, Bank, Expression, Sum
 
 
 def test_multiplication():
@@ -26,6 +26,13 @@ def test_currency():
 
 def test_simple_addition():
     bank = Bank()
-    sum: Expression = Money.dollor(5) + Money.dollor(5)
+    sum: Sum = Money.dollor(5) + Money.dollor(5)
     reduced = bank.reduce(sum, "USD")
     assert Money.dollor(10) == reduced
+
+
+def test_plus_returns_sum():
+    five: Money = Money.dollor(5)
+    sum: Sum = five + five
+    assert (five, sum.augend)
+    assert (five, sum.addend)

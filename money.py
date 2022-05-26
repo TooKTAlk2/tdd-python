@@ -32,12 +32,20 @@ class Money(Expression):
         return Money(self._amount * multiplier, self.currency)
 
     def __add__(self, __o: object) -> Expression:
-        return Money(self._amount + __o._amount, self.currency)
+        return Sum(self, __o)
 
 
 class Bank:
     def reduce(self, source: Money, to: str):
         return Money.dollor(10)
+
+
+class Sum(Expression):
+    def __init__(self, augend: Money, addend: Money):
+        self.augend = augend
+        self.addend = addend
+
+    pass
 
 
 if __name__ == "__main__":
