@@ -19,17 +19,29 @@ class Money(Expression):
         return Money(amount, "CHF")
 
     @property
+    def amount(self):
+        return self._amount
+
+    @amount.setter
+    def amount(self, amount):
+        self._amount = amount
+
+    @property
     def currency(self):
         return self._currency
 
+    @currency.setter
+    def currency(self, currency):
+        self._currency = currency
+
     def __eq__(self, __o: object):
-        return self._amount == __o._amount and self.currency == __o.currency
+        return self.amount == __o.amount and self.currency == __o.currency
 
     def __str__(self) -> str:
         return f"{self.amount} {self.currency}"
 
     def times(self, multiplier):
-        return Money(self._amount * multiplier, self.currency)
+        return Money(self.amount * multiplier, self.currency)
 
     def __add__(self, __o: object) -> Expression:
         return Sum(self, __o)
@@ -48,7 +60,7 @@ class Sum(Expression):
 
     def reduce(self, to: str):
 
-        amount = self.augend._amount + self.addend._amount
+        amount = self.augend.amount + self.addend.amount
 
         return Money(amount, to)
 
