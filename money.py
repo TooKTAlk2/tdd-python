@@ -46,9 +46,14 @@ class Money(Expression):
     def __add__(self, __o: object) -> Expression:
         return Sum(self, __o)
 
+    def reduce(self, to: str):
+        return self
+
 
 class Bank:
     def reduce(self, source: Expression, to: str):
+        if isinstance(source, Money):
+            return source.reduce(to)
         sum: Sum = source
         return sum.reduce(to)
 
