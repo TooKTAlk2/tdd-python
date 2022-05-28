@@ -50,8 +50,7 @@ class Money(Expression):
         return Sum(self, __o)
 
     def reduce(self, bank, to: str = "USD"):
-        rate = 2 if self.currency == "CHF" and to == "USD" else 1
-
+        rate = bank.rate(self.currency, to)
         return Money(self.amount / rate, to)
 
 
@@ -63,8 +62,8 @@ class Sum(Expression):
     def reduce(self, bank, to: str):
 
         amount = self.augend.amount + self.addend.amount
-
-        return Money(amount, to)
+        rate = bank.rate(self.augend.currency, to)
+        return Money(amount / rate, to)
 
 
 class Bank:
@@ -78,6 +77,11 @@ class Bank:
     def add_rate(self, src, dest, rate):
 
         pass
+
+    def rate(self, src: str, dest: str):
+        if src == "CHF" and dest == "USD":
+            return 2
+        return 1
 
 
 if __name__ == "__main__":
