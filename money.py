@@ -9,6 +9,9 @@ class Expression(ABC):
     def __add__(self, addend):
         pass
 
+    def times(self, multiplier: int):
+        pass
+
 
 class Money(Expression):
     def __init__(self, amount, currency) -> None:
@@ -69,6 +72,9 @@ class Sum(Expression):
 
     def __add__(self, addend: Expression):
         return Sum(self, addend)
+
+    def times(self, multiplier):
+        return Sum(self.augend.times(multiplier), self.addend.times(multiplier))
 
 
 class Bank:

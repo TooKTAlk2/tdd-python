@@ -84,3 +84,14 @@ def test_sum_plus_moeny():
     result: Money = bank.reduce(sum, "USD")
     result = bank.reduce(sum, "USD")
     assert result == Money.dollor(15)
+
+
+def test_sum_times_money():
+    five_bucks: Expression = Money.dollor(5)
+    ten_franc: Expression = Money.franc(10)
+
+    bank = Bank()
+    bank.add_rate("CHF", "USD", 2)
+    sum: Expression = Sum(five_bucks, ten_franc).times(2)
+    result = bank.reduce(sum, "USD")
+    assert result == Money.dollor(20)
