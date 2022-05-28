@@ -105,3 +105,7 @@ if __name__ == "__main__":
     five_franc = Money(5, "CHF")
 
     print(five_dollor.__class__.__name__)
+
+    one_two = Pair("1", "2")
+    two_one = Pair("2", "1")
+    print(one_two == two_one)
