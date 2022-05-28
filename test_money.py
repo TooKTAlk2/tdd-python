@@ -34,5 +34,12 @@ def test_simple_addition():
 def test_plus_returns_sum():
     five: Money = Money.dollor(5)
     sum: Sum = five + five
-    assert (five, sum.augend)
-    assert (five, sum.addend)
+    assert five == sum.augend
+    assert five == sum.addend
+
+
+def test_reduce_sum():
+    sum: Expression = Sum(Money.dollor(3), Money.dollor(2))
+    bank = Bank()
+    result: Money = bank.reduce(sum, "USD")
+    assert result == Money.dollor(5)

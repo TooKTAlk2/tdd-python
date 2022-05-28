@@ -36,8 +36,9 @@ class Money(Expression):
 
 
 class Bank:
-    def reduce(self, source: Money, to: str):
-        return Money.dollor(10)
+    def reduce(self, source: Expression, to: str):
+        sum: Sum = source
+        return sum.reduce(to)
 
 
 class Sum(Expression):
@@ -45,7 +46,11 @@ class Sum(Expression):
         self.augend = augend
         self.addend = addend
 
-    pass
+    def reduce(self, to: str):
+
+        amount = self.augend._amount + self.addend._amount
+
+        return Money(amount, to)
 
 
 if __name__ == "__main__":
