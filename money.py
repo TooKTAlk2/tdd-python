@@ -1,10 +1,11 @@
-from abc import ABC, abstractmethod
-from ast import Expr
-from re import M
+from abc import ABC
 
 
 class Expression(ABC):
     def reduce(self, bank, to: str = "USD"):
+        pass
+
+    def __add__(self, addend):
         pass
 
 
@@ -43,11 +44,11 @@ class Money(Expression):
     def __str__(self) -> str:
         return f"{self.amount} {self.currency}"
 
-    def times(self, multiplier):
+    def times(self, multiplier) -> Expression:
         return Money(self.amount * multiplier, self.currency)
 
-    def __add__(self, __o: object) -> Expression:
-        return Sum(self, __o)
+    def __add__(self, addend: Expression) -> Expression:
+        return Sum(self, addend)
 
     def reduce(self, bank, to: str = "USD"):
         rate = bank.rate(self.currency, to)
@@ -55,15 +56,18 @@ class Money(Expression):
 
 
 class Sum(Expression):
-    def __init__(self, augend: Money, addend: Money):
+    def __init__(self, augend: Expression, addend: Expression):
         self.augend = augend
         self.addend = addend
 
     def reduce(self, bank, to: str):
+        amount = (
+            self.augend.reduce(bank, to).amount + self.addend.reduce(bank, to).amount
+        )
+        return Money(amount, to)
 
-        amount = self.augend.amount + self.addend.amount
-        rate = bank.rate(self.augend.currency, to)
-        return Money(amount / rate, to)
+    def __add__(self, addend):
+        pass
 
 
 class Bank:

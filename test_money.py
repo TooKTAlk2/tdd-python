@@ -62,3 +62,13 @@ def test_reduce_money_different_currency():
 
 def test_identity_rate():
     assert 1 == Bank().rate("USD", "USD")
+
+
+def test_mixed_addition():
+    fiveBucks: Expression = Money.dollor(5)
+    tenFrancs: Expression = Money.franc(10)
+
+    bank = Bank()
+    bank.add_rate("CHF", "USD", 2)
+    result = bank.reduce(tenFrancs + fiveBucks, "USD")
+    assert Money.dollor(10) == result
