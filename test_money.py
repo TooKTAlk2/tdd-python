@@ -95,3 +95,9 @@ def test_sum_times_money():
     sum: Expression = Sum(five_bucks, ten_franc).times(2)
     result = bank.reduce(sum, "USD")
     assert result == Money.dollor(20)
+
+
+def test_plus_same_currency_returns_money():
+    sum = Money.dollor(1) + Money.dollor(1)
+
+    assert isinstance(sum, Money)
