@@ -1,8 +1,11 @@
-from abc import ABC
+from abc import ABC, abstractmethod
+from ast import Expr
+from re import M
 
 
 class Expression(ABC):
-    pass
+    def reduce(self, to: str = "USD"):
+        pass
 
 
 class Money(Expression):
@@ -46,16 +49,8 @@ class Money(Expression):
     def __add__(self, __o: object) -> Expression:
         return Sum(self, __o)
 
-    def reduce(self, to: str):
+    def reduce(self, to: str = "USD"):
         return self
-
-
-class Bank:
-    def reduce(self, source: Expression, to: str):
-        if isinstance(source, Money):
-            return source.reduce(to)
-        sum: Sum = source
-        return sum.reduce(to)
 
 
 class Sum(Expression):
@@ -68,6 +63,16 @@ class Sum(Expression):
         amount = self.augend.amount + self.addend.amount
 
         return Money(amount, to)
+
+
+class Bank:
+    def reduce(
+        self,
+        source: Expression = Money.dollor(5) or Sum(Money.dollor(1), Money.dollor(2)),
+        to: str = "USD",
+    ):
+
+        return source.reduce(to)
 
 
 if __name__ == "__main__":
