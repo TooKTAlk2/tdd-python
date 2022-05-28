@@ -1,4 +1,5 @@
 from abc import ABC
+from audioop import add
 
 
 class Expression(ABC):
@@ -66,8 +67,8 @@ class Sum(Expression):
         )
         return Money(amount, to)
 
-    def __add__(self, addend):
-        pass
+    def __add__(self, addend: Expression):
+        return Sum(self, addend)
 
 
 class Bank:

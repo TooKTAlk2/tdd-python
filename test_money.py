@@ -72,3 +72,15 @@ def test_mixed_addition():
     bank.add_rate("CHF", "USD", 2)
     result = bank.reduce(tenFrancs + fiveBucks, "USD")
     assert Money.dollor(10) == result
+
+
+def test_sum_plus_moeny():
+    five_bucks: Expression = Money.dollor(5)
+    ten_franc: Expression = Money.franc(10)
+
+    bank = Bank()
+    bank.add_rate("CHF", "USD", 2)
+    sum: Expression = Sum(five_bucks, ten_franc) + five_bucks
+    result: Money = bank.reduce(sum, "USD")
+    result = bank.reduce(sum, "USD")
+    assert result == Money.dollor(15)
