@@ -50,7 +50,9 @@ class Money(Expression):
         return Sum(self, __o)
 
     def reduce(self, to: str = "USD"):
-        return self
+        rate = 2 if to == "CHF" else 2
+
+        return Money(self.amount / rate, to)
 
 
 class Sum(Expression):
@@ -71,8 +73,11 @@ class Bank:
         source: Expression = Money.dollor(5) or Sum(Money.dollor(1), Money.dollor(2)),
         to: str = "USD",
     ):
-
         return source.reduce(to)
+
+    def add_rate(self, src, dest, rate):
+
+        pass
 
 
 if __name__ == "__main__":
