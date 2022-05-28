@@ -4,7 +4,7 @@ from re import M
 
 
 class Expression(ABC):
-    def reduce(self, to: str = "USD"):
+    def reduce(self, bank, to: str = "USD"):
         pass
 
 
@@ -49,8 +49,8 @@ class Money(Expression):
     def __add__(self, __o: object) -> Expression:
         return Sum(self, __o)
 
-    def reduce(self, to: str = "USD"):
-        rate = 2 if to == "CHF" else 2
+    def reduce(self, bank, to: str = "USD"):
+        rate = 2 if self.currency == "CHF" and to == "USD" else 1
 
         return Money(self.amount / rate, to)
 
@@ -60,7 +60,7 @@ class Sum(Expression):
         self.augend = augend
         self.addend = addend
 
-    def reduce(self, to: str):
+    def reduce(self, bank, to: str):
 
         amount = self.augend.amount + self.addend.amount
 
@@ -73,7 +73,7 @@ class Bank:
         source: Expression = Money.dollor(5) or Sum(Money.dollor(1), Money.dollor(2)),
         to: str = "USD",
     ):
-        return source.reduce(to)
+        return source.reduce(self, to)
 
     def add_rate(self, src, dest, rate):
 
