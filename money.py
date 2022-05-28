@@ -67,6 +67,8 @@ class Sum(Expression):
 
 
 class Bank:
+    rates = dict()
+
     def reduce(
         self,
         source: Expression = Money.dollor(5) or Sum(Money.dollor(1), Money.dollor(2)),
@@ -74,14 +76,28 @@ class Bank:
     ):
         return source.reduce(self, to)
 
-    def add_rate(self, src, dest, rate):
+    @classmethod
+    def add_rate(cls, src: str, dest: str, rate: int):
+        cls.rates[Pair(src, dest)] = rate
 
-        pass
+    @classmethod
+    def rate(cls, src: str, dest: str):
+        if src == dest:
+            return 1
+        return cls.rates[Pair(src, dest)]
 
-    def rate(self, src: str, dest: str):
-        if src == "CHF" and dest == "USD":
-            return 2
-        return 1
+
+class Pair:
+    def __init__(self, src, dest) -> None:
+        # private
+        self.__from = src
+        self.__to = dest
+
+    def __eq__(self, __o: object) -> bool:
+        return self.__from == __o.__from and self.__to == __o.__to
+
+    def __hash__(self) -> int:
+        return 0
 
 
 if __name__ == "__main__":

@@ -50,7 +50,7 @@ def test_reduce_money():
     bank = Bank()
     result: Money = bank.reduce(five, "USD")
 
-    assert Money.dollor(5) == five
+    assert Money.dollor(5) == result
 
 
 def test_reduce_money_different_currency():
@@ -59,3 +59,7 @@ def test_reduce_money_different_currency():
     result: Money = bank.reduce(Money.franc(2), "USD")
 
     assert result == Money.dollor(1)
+
+
+def test_identity_rate():
+    assert 1 == Bank().rate("USD", "USD")
